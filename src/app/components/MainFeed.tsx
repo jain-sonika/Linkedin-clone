@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardHeader,
@@ -32,7 +32,7 @@ import {
 
 
 export default function MainFeed() {
-  const posts = [
+  const postsData = [
   {
     id: 1,
     repostedBy: 'Delta4 Infotech',
@@ -90,25 +90,25 @@ export default function MainFeed() {
 ];
 // At the top, after imports, inside the component:
 const [sortBy, setSortBy] = useState('Top');
-const [sortedPosts, setSortedPosts] = useState(posts);
-const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-const open = Boolean(anchorEl);
+  const [sortedPosts, setSortedPosts] = useState(postsData);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-  setAnchorEl(event.currentTarget);
-};
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-const handleClose = (option?: string) => {
-  if (option) {
-    setSortBy(option);
-    if (option === 'Recent') {
-      setSortedPosts([...posts].reverse());
-    } else {
-      setSortedPosts(posts);
+  const handleClose = (option?: string) => {
+    if (option) {
+      setSortBy(option);
+      if (option === 'Recent') {
+        setSortedPosts([...postsData].reverse());
+      } else {
+        setSortedPosts(postsData);
+      }
     }
-  }
-  setAnchorEl(null);
-};
+    setAnchorEl(null);
+  };
  
 
   return (
