@@ -89,10 +89,16 @@ export default function MainFeed() {
   },
 ];
 // At the top, after imports, inside the component:
-const [sortBy, setSortBy] = useState('Top');
+
+ const [sortBy, setSortBy] = useState('Top');
   const [sortedPosts, setSortedPosts] = useState(postsData);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mounted, setMounted] = useState(false);
   const open = Boolean(anchorEl);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -109,6 +115,11 @@ const [sortBy, setSortBy] = useState('Top');
     }
     setAnchorEl(null);
   };
+
+  if (!mounted) {
+    return null;
+  }
+
  
 
   return (
