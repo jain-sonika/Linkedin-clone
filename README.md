@@ -2,6 +2,8 @@
 
 A fully functional LinkedIn clone built with Next.js 14, TypeScript, and Material-UI (MUI). This project replicates the core UI/UX features of LinkedIn's web interface with modern web technologies.
 
+![](publicvideo.gif.mp4)
+
 ## 🚀 Features
 
 ### Navigation Bar
