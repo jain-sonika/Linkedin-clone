@@ -70,7 +70,7 @@ export default function MainFeed() {
       time: '2w',
       content: '❗ Interested candidates send your CV to anushka.panwar@coxandkings.com or DM for more details.',
       nestedPost: {
-        author: 'Karan Agarwal',
+        author: 'Karan',
         authorAvatar: '/avatar2.png',
         verified: true,
         badge: '• 3rd+',
@@ -368,7 +368,7 @@ export default function MainFeed() {
                         variant="text"
                         startIcon={<span style={{ fontSize: '16px', fontWeight: 700 }}>+</span>}
                         sx={{ 
-                          ml: 1,
+                          ml: 'auto',
                           minWidth: 'auto',
                           px: 1,
                           py: 0.25,
