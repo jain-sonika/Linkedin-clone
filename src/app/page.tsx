@@ -8,8 +8,12 @@ import {
   Box,
   Container,
   Typography,
-  Badge,
   ButtonBase,
+  Divider,
+  IconButton,
+  Drawer,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import {
   Search,
@@ -20,40 +24,52 @@ import {
   Notifications,
   Apps,
   ArrowDropDown,
+  Menu as MenuIcon,
 } from '@mui/icons-material';
 import LeftSidebar from './components/LeftSidebar';
 import MainFeed from './components/MainFeed';
 import RightSidebar from './components/RightSidebar';
 
 export default function HomePage() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: '#F3F2EF' }}>
+    <Box>
       <AppBar 
         position="sticky" 
-        sx={{ 
-          bgcolor: 'white', 
-          boxShadow: 'none',
-          borderBottom: '1px solid rgba(0,0,0,0.08)'
-        }}
+        color="default"
       >
         <Container maxWidth="lg">
           <Toolbar 
             sx={{ 
-              minHeight: '30px !important',
-              px: '0 !important',
+              minHeight: { xs: '48px', sm: '52px' },
+              px: { xs: 1, sm: 2, md: 0 },
               justifyContent: 'space-between'
             }}
           >
             {/* Left Section - Logo & Search */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {/* LinkedIn Logo */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1 }, flex: 1 }}>
+              {/* Mobile: Profile Avatar */}
+              <Avatar
+                sx={{
+                  width: 32,
+                  height: 32,
+                  display: { xs: 'flex', sm: 'none' }
+                }}
+              >
+                S
+              </Avatar>
+
+              {/* Desktop: LinkedIn Logo */}
               <Box
                 sx={{
                   width: 34,
                   height: 34,
-                  bgcolor: '#0A66C2',
-                  borderRadius: '4px',
-                  display: 'flex',
+                  bgcolor: 'primary.main',
+                  display: { xs: 'none', sm: 'flex' },
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer',
@@ -64,414 +80,397 @@ export default function HomePage() {
                   sx={{
                     color: 'white',
                     fontSize: '20px',
-                    fontWeight: 700,
-                    fontFamily: 'system-ui, -apple-system, sans-serif'
+                    fontWeight: 700
                   }}
                 >
                   in
                 </Typography>
               </Box>
 
-              {/* Search Bar */}
-<Box
-  sx={{
-    display: 'flex',
-    alignItems: 'center',
-  
-    borderRadius: '999px',   // 👈 makes it pill-shaped
-    px: 1.5,
-    height: '34px',
-    width: '280px',
-    cursor: 'text',
-    border: '1px solid black',
-  }}
->
-  <Search sx={{ color: '#383636ff', fontSize: 16 }}  />
-  <InputBase
-    placeholder="Search"
-    sx={{
-      ml: 1,
-      flex: 1,
-      fontSize: '14px',
-      color: '#000000DE',
-      '& input': {
-        padding: 0,
-        '&::placeholder': {
-          color: '#666666',
-          opacity: 1
-        }
-      }
-    }}
-  />
-</Box>
-
+              {/* Search Bar - Full width on mobile */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  px: 1.5,
+                  height: '34px',
+                  width: { xs: '100%', sm: '200px', md: '280px' },
+                  cursor: 'text',
+                  flex: { xs: 1, sm: 0 }
+                }}
+              >
+                <Search />
+                <InputBase
+                  placeholder="Search"
+                  sx={{
+                    ml: 1,
+                    flex: 1
+                  }}
+                />
+              </Box>
             </Box>
 
+            {/* Mobile: Message Icon (top right) */}
+            <IconButton 
+              sx={{ 
+                display: { xs: 'flex', sm: 'none' }
+              }}
+            >
+              <Message />
+            </IconButton>
+
             {/* Right Section - Navigation Icons */}
-           {/* Right Section - Navigation Icons */}
-{/* Right Section - Navigation Icons */}
-<Box sx={{ display: 'flex', alignItems: 'center', height: '52px', gap: 0.5 }}>
-  {/* Home */}
-  <ButtonBase
-    sx={{
-      flexDirection: 'column',
-      gap: 0,
-      px: 1.5,
-      pt: 1,
-      pb: 0.5,
-      height: '52px',
-      borderRadius: 0,
-      borderBottom: '2px solid #000000',
-      '&:hover': { bgcolor: 'rgba(0,0,0,0.08)' }
-    }}
-  >
-    <Home sx={{ fontSize: 22, color: '#000000', mb: 0.25 }} />
-    <Typography
-      sx={{
-        fontSize: '12px',
-        color: '#000000',
-        fontWeight: 400,
-        lineHeight: 1
-      }}
-    >
-      Home
-    </Typography>
-  </ButtonBase>
+            <Box sx={{ 
+              display: { xs: 'none', sm: 'flex' }, 
+              alignItems: 'center', 
+              height: '52px', 
+              gap: 0.5 
+            }}>
+              {/* Home */}
+              <ButtonBase
+                sx={{
+                  flexDirection: 'column',
+                  gap: 0,
+                  px: { xs: 0.75, sm: 1.5 },
+                  pt: 1,
+                  pb: 0.5,
+                  height: '52px',
+                  minWidth: { xs: '50px', sm: 'auto' }
+                }}
+              >
+                <Home sx={{ mb: 0.25, fontSize: { xs: 20, sm: 22 } }} />
+                <Typography
+                  variant="caption"
+                  sx={{
+                    lineHeight: 1,
+                    display: { xs: 'none', sm: 'block' }
+                  }}
+                >
+                  Home
+                </Typography>
+              </ButtonBase>
 
-  {/* My Network */}
-  <ButtonBase
-    sx={{
-      flexDirection: 'column',
-      gap: 0,
-      px: 1.5,
-      pt: 1,
-      pb: 0.5,
-      height: '52px',
-      borderRadius: 0,
-      borderBottom: '2px solid transparent',
-      transition: 'all 0.2s',
-      '&:hover': { 
-        bgcolor: 'rgba(0,0,0,0.08)',
-        '& .MuiSvgIcon-root': { color: '#000000' },
-        '& .MuiTypography-root': { color: '#000000' }
-      },
-      '&:active': {
-        borderBottom: '2px solid #000000'
-      }
-    }}
-  >
-    <People sx={{ fontSize: 22, color: '#666666', mb: 0.25, transition: 'color 0.2s' }} />
-    <Typography
-      sx={{
-        fontSize: '12px',
-        color: '#666666',
-        fontWeight: 400,
-        lineHeight: 1,
-        transition: 'color 0.2s'
-      }}
-    >
-      My Network
-    </Typography>
-  </ButtonBase>
+              {/* My Network */}
+              <ButtonBase
+                sx={{
+                  flexDirection: 'column',
+                  gap: 0,
+                  px: { xs: 0.75, sm: 1.5 },
+                  pt: 1,
+                  pb: 0.5,
+                  height: '52px',
+                  minWidth: { xs: '50px', sm: 'auto' }
+                }}
+              >
+                <People sx={{ mb: 0.25, fontSize: { xs: 20, sm: 22 } }} />
+                <Typography
+                  variant="caption"
+                  sx={{
+                    lineHeight: 1,
+                    display: { xs: 'none', sm: 'block' }
+                  }}
+                >
+                  My Network
+                </Typography>
+              </ButtonBase>
 
-  {/* Jobs */}
-  <ButtonBase
-    sx={{
-      flexDirection: 'column',
-      gap: 0,
-      px: 1.5,
-      pt: 1,
-      pb: 0.5,
-      height: '52px',
-      borderRadius: 0,
-      borderBottom: '2px solid transparent',
-      transition: 'all 0.2s',
-      '&:hover': { 
-        bgcolor: 'rgba(0,0,0,0.08)',
-        '& .MuiSvgIcon-root': { color: '#000000' },
-        '& .MuiTypography-root': { color: '#000000' }
-      },
-      '&:active': {
-        borderBottom: '2px solid #000000'
-      }
-    }}
-  >
-    <Work sx={{ fontSize: 22, color: '#666666', mb: 0.25, transition: 'color 0.2s' }} />
-    <Typography
-      sx={{
-        fontSize: '12px',
-        color: '#666666',
-        fontWeight: 400,
-        lineHeight: 1,
-        transition: 'color 0.2s'
-      }}
-    >
-      Jobs
-    </Typography>
-  </ButtonBase>
+              {/* Jobs */}
+              <ButtonBase
+                sx={{
+                  flexDirection: 'column',
+                  gap: 0,
+                  px: { xs: 0.75, sm: 1.5 },
+                  pt: 1,
+                  pb: 0.5,
+                  height: '52px',
+                  minWidth: { xs: '50px', sm: 'auto' },
+                  display: { xs: 'none', sm: 'flex' }
+                }}
+              >
+                <Work sx={{ mb: 0.25, fontSize: { xs: 20, sm: 22 } }} />
+                <Typography
+                  variant="caption"
+                  sx={{
+                    lineHeight: 1
+                  }}
+                >
+                  Jobs
+                </Typography>
+              </ButtonBase>
 
-  {/* Messaging */}
-  <ButtonBase
-    sx={{
-      flexDirection: 'column',
-      gap: 0,
-      px: 1.5,
-      pt: 1,
-      pb: 0.5,
-      height: '52px',
-      borderRadius: 0,
-      borderBottom: '2px solid transparent',
-      transition: 'all 0.2s',
-      '&:hover': { 
-        bgcolor: 'rgba(0,0,0,0.08)',
-        '& .MuiSvgIcon-root': { color: '#000000' },
-        '& .MuiTypography-root': { color: '#000000' }
-      },
-      '&:active': {
-        borderBottom: '2px solid #000000'
-      }
-    }}
-  >
-    <Badge
-      badgeContent={4}
-      sx={{
-        '& .MuiBadge-badge': {
-          bgcolor: '#CC1016',
-          color: 'white',
-          fontSize: '10px',
-          height: '16px',
-          minWidth: '16px',
-          padding: '0 4px',
-          fontWeight: 600,
-          top: 2,
-          right: 2
-        }
-      }}
-    >
-      <Message sx={{ fontSize: 22, color: '#666666', transition: 'color 0.2s' }} />
-    </Badge>
-    <Typography
-      sx={{
-        fontSize: '12px',
-        color: '#666666',
-        fontWeight: 400,
-        lineHeight: 1,
-        mt: 0.25,
-        transition: 'color 0.2s'
-      }}
-    >
-      Messaging
-    </Typography>
-  </ButtonBase>
+              {/* Messaging */}
+              <ButtonBase
+                sx={{
+                  flexDirection: 'column',
+                  gap: 0,
+                  px: { xs: 0.75, sm: 1.5 },
+                  pt: 1,
+                  pb: 0.5,
+                  height: '52px',
+                  minWidth: { xs: '50px', sm: 'auto' }
+                }}
+              >
+                <Message sx={{ mb: 0.25, fontSize: { xs: 20, sm: 22 } }} />
+                <Typography
+                  variant="caption"
+                  sx={{
+                    lineHeight: 1,
+                    display: { xs: 'none', sm: 'block' }
+                  }}
+                >
+                  Messaging
+                </Typography>
+              </ButtonBase>
 
-  {/* Notifications */}
-  <ButtonBase
-    sx={{
-      flexDirection: 'column',
-      gap: 0,
-      px: 1.5,
-      pt: 1,
-      pb: 0.5,
-      height: '52px',
-      borderRadius: 0,
-      borderBottom: '2px solid transparent',
-      transition: 'all 0.2s',
-      '&:hover': { 
-        bgcolor: 'rgba(0,0,0,0.08)',
-        '& .MuiSvgIcon-root': { color: '#000000' },
-        '& .MuiTypography-root': { color: '#000000' }
-      },
-      '&:active': {
-        borderBottom: '2px solid #000000'
-      }
-    }}
-  >
-    <Badge
-      badgeContent={5}
-      sx={{
-        '& .MuiBadge-badge': {
-          bgcolor: '#CC1016',
-          color: 'white',
-          fontSize: '10px',
-          height: '16px',
-          minWidth: '16px',
-          padding: '0 4px',
-          fontWeight: 600,
-          top: 2,
-          right: 2
-        }
-      }}
-    >
-      <Notifications sx={{ fontSize: 22, color: '#666666', transition: 'color 0.2s' }} />
-    </Badge>
-    <Typography
-      sx={{
-        fontSize: '12px',
-        color: '#666666',
-        fontWeight: 400,
-        lineHeight: 1,
-        mt: 0.25,
-        transition: 'color 0.2s'
-      }}
-    >
-      Notifications
-    </Typography>
-  </ButtonBase>
+              {/* Notifications */}
+              <ButtonBase
+                sx={{
+                  flexDirection: 'column',
+                  gap: 0,
+                  px: { xs: 0.75, sm: 1.5 },
+                  pt: 1,
+                  pb: 0.5,
+                  height: '52px',
+                  minWidth: { xs: '50px', sm: 'auto' }
+                }}
+              >
+                <Notifications sx={{ mb: 0.25, fontSize: { xs: 20, sm: 22 } }} />
+                <Typography
+                  variant="caption"
+                  sx={{
+                    lineHeight: 1,
+                    display: { xs: 'none', sm: 'block' }
+                  }}
+                >
+                  Notifications
+                </Typography>
+              </ButtonBase>
 
-  {/* Me */}
-  <ButtonBase
-    sx={{
-      flexDirection: 'column',
-      gap: 0,
-      px: 1.5,
-      pt: 1,
-      pb: 0.5,
-      height: '52px',
-      borderRadius: 0,
-      borderBottom: '2px solid transparent',
-      transition: 'all 0.2s',
-      '&:hover': { 
-        bgcolor: 'rgba(0,0,0,0.08)',
-        '& .MuiSvgIcon-root': { color: '#000000' },
-        '& .MuiTypography-root': { color: '#000000' }
-      },
-      '&:active': {
-        borderBottom: '2px solid #000000'
-      }
-    }}
-  >
-    <Avatar
-      sx={{
-        width: 24,
-        height: 24,
-        bgcolor: '#666666',
-        fontSize: '12px',
-        mb: 0.25
-      }}
-    >
-      S
-    </Avatar>
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
-      <Typography
-        sx={{
-          fontSize: '12px',
-          color: '#666666',
-          fontWeight: 400,
-          lineHeight: 1,
-          transition: 'color 0.2s'
-        }}
-      >
-        Me
-      </Typography>
-      <ArrowDropDown sx={{ fontSize: 16, color: '#666666', transition: 'color 0.2s' }} />
-    </Box>
-  </ButtonBase>
+              {/* Me */}
+              <ButtonBase
+                sx={{
+                  flexDirection: 'column',
+                  gap: 0,
+                  px: { xs: 0.75, sm: 1.5 },
+                  pt: 1,
+                  pb: 0.5,
+                  height: '52px',
+                  minWidth: { xs: '50px', sm: 'auto' },
+                  display: { xs: 'none', sm: 'flex' }
+                }}
+              >
+                <Avatar
+                  sx={{
+                    width: 24,
+                    height: 24,
+                    mb: 0.25
+                  }}
+                >
+                  S
+                </Avatar>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      lineHeight: 1
+                    }}
+                  >
+                    Me
+                  </Typography>
+                  <ArrowDropDown fontSize="small" />
+                </Box>
+              </ButtonBase>
 
-  {/* Divider */}
-  <Box
-    sx={{
-      width: '1px',
-      height: '42px',
-      bgcolor: 'rgba(0,0,0,0.15)',
-      mx: 0.5
-    }}
-  />
+              {/* Divider - Desktop only */}
+              {isDesktop && (
+                <Divider orientation="vertical" flexItem sx={{ mx: 0.5, my: 0.5 }} />
+              )}
 
-  {/* For Business */}
-  <ButtonBase
-    sx={{
-      flexDirection: 'column',
-      gap: 0,
-      px: 1.5,
-      pt: 1,
-      pb: 0.5,
-      height: '52px',
-      borderRadius: 0,
-      borderBottom: '2px solid transparent',
-      transition: 'all 0.2s',
-      '&:hover': { 
-        bgcolor: 'rgba(0,0,0,0.08)',
-        '& .MuiSvgIcon-root': { color: '#000000' },
-        '& .MuiTypography-root': { color: '#000000' }
-      },
-      '&:active': {
-        borderBottom: '2px solid #000000'
-      }
-    }}
-  >
-    <Apps sx={{ fontSize: 22, color: '#666666', mb: 0.25, transition: 'color 0.2s' }} />
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
-      <Typography
-        sx={{
-          fontSize: '12px',
-          color: '#666666',
-          fontWeight: 400,
-          lineHeight: 1,
-          transition: 'color 0.2s'
-        }}
-      >
-        For Business
-      </Typography>
-      <ArrowDropDown sx={{ fontSize: 16, color: '#666666', transition: 'color 0.2s' }} />
-    </Box>
-  </ButtonBase>
+              {/* For Business - Desktop only */}
+              {isDesktop && (
+                <ButtonBase
+                  sx={{
+                    flexDirection: 'column',
+                    gap: 0,
+                    px: 1.5,
+                    pt: 1,
+                    pb: 0.5,
+                    height: '52px'
+                  }}
+                >
+                  <Apps sx={{ mb: 0.25 }} />
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25 }}>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        lineHeight: 1
+                      }}
+                    >
+                      For Business
+                    </Typography>
+                    <ArrowDropDown fontSize="small" />
+                  </Box>
+                </ButtonBase>
+              )}
 
-  {/* Premium Banner */}
-  {/* Premium Banner */}
-{/* Premium Banner */}
-<Box
-  sx={{
-    ml: 1,
-    textAlign: 'right',
-    cursor: 'pointer',
-  }}
->
-  <Typography
-    sx={{
-      fontSize: '12px',
-      color: '#915907',
-      fontWeight: 400,
-      textDecoration: 'underline',
-      '&:hover': {
-        color: '#6B4205'
-      }
-    }}
-  >
-    Reactivate Premium:
-  </Typography>
-  <Typography
-    sx={{
-      paddingRight: 4,
-      fontSize: '12px',
-      color: '#915907',
-      
-      textDecoration: 'underline',
-      '&:hover': {
-        color: '#6B4205'
-      }
-    }}
-  >
-    50% Off
-  </Typography>
-</Box>
-</Box>
+              {/* Premium Banner - Desktop only */}
+              {isDesktop && (
+                <Box
+                  sx={{
+                    ml: 1,
+                    textAlign: 'right',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Typography variant="caption">
+                    Reactivate Premium:
+                  </Typography>
+                  <Typography variant="caption" sx={{ paddingRight: 4 }}>
+                    50% Off
+                  </Typography>
+                </Box>
+              )}
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
 
-      <Container maxWidth="lg" sx={{ mt: 3, mb: 3 }}>
-        <Box sx={{ display: 'flex', gap: 3 }}>
-          <Box sx={{ width: '225px', flexShrink: 0 }}>
+      <Container 
+        maxWidth="lg" 
+        sx={{ 
+          mt: { xs: 1, sm: 2, md: 3 }, 
+          mb: { xs: 8, sm: 2, md: 3 },
+          px: { xs: 1, sm: 2 }
+        }}
+      >
+        <Box sx={{ 
+          display: 'flex', 
+          gap: { xs: 1, sm: 2, md: 3 },
+          flexDirection: { xs: 'column', md: 'row' }
+        }}>
+          {/* Left Sidebar - Hidden on mobile, visible on tablet+ */}
+          <Box sx={{ 
+            width: { xs: '100%', md: '225px' }, 
+            flexShrink: 0,
+            display: { xs: 'none', sm: 'block' }
+          }}>
             <LeftSidebar />
           </Box>
-          <Box sx={{ flex: 1, maxWidth: '550px' }}>
+
+          {/* Main Feed - Full width on mobile */}
+          <Box sx={{ 
+            flex: 1, 
+            maxWidth: { xs: '100%', md: '550px' },
+            mx: { xs: 0, md: 'auto' }
+          }}>
             <MainFeed />
           </Box>
-          <Box sx={{ width: '300px', flexShrink: 0 }}>
+
+          {/* Right Sidebar - Hidden on mobile and tablet, visible on desktop */}
+          <Box sx={{ 
+            width: '300px', 
+            flexShrink: 0,
+            display: { xs: 'none', lg: 'block' }
+          }}>
             <RightSidebar />
           </Box>
         </Box>
       </Container>
+
+      {/* Mobile Bottom Navigation */}
+      <AppBar 
+        position="fixed" 
+        color="default"
+        sx={{ 
+          top: 'auto', 
+          bottom: 0,
+          display: { xs: 'block', sm: 'none' }
+        }}
+      >
+        <Toolbar sx={{ justifyContent: 'space-around', minHeight: '56px' }}>
+          {/* Home */}
+          <ButtonBase
+            sx={{
+              flexDirection: 'column',
+              gap: 0.5,
+              py: 0.5
+            }}
+          >
+            <Home />
+            <Typography variant="caption">
+              Home
+            </Typography>
+          </ButtonBase>
+
+          {/* My Network */}
+          <ButtonBase
+            sx={{
+              flexDirection: 'column',
+              gap: 0.5,
+              py: 0.5
+            }}
+          >
+            <People />
+            <Typography variant="caption">
+              My Network
+            </Typography>
+          </ButtonBase>
+
+          {/* Post */}
+          <ButtonBase
+            sx={{
+              flexDirection: 'column',
+              gap: 0.5,
+              py: 0.5
+            }}
+          >
+            <Box
+              sx={{
+                width: 32,
+                height: 32,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <Typography variant="h5" fontWeight={300}>
+                +
+              </Typography>
+            </Box>
+            <Typography variant="caption">
+              Post
+            </Typography>
+          </ButtonBase>
+
+          {/* Notifications */}
+          <ButtonBase
+            sx={{
+              flexDirection: 'column',
+              gap: 0.5,
+              py: 0.5
+            }}
+          >
+            <Notifications />
+            <Typography variant="caption">
+              Notifications
+            </Typography>
+          </ButtonBase>
+
+          {/* Jobs */}
+          <ButtonBase
+            sx={{
+              flexDirection: 'column',
+              gap: 0.5,
+              py: 0.5
+            }}
+          >
+            <Work />
+            <Typography variant="caption">
+              Jobs
+            </Typography>
+          </ButtonBase>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }
