@@ -118,8 +118,8 @@ export default function MainFeed() {
 
   return (
     <Box>
-      {/* Start a Post Card */}
-      <Card>
+      {/* Start a Post Card - Desktop only */}
+      <Card sx={{ display: { xs: 'none', sm: 'block' } }}>
         <CardContent sx={{ py: 1.5, px: 2 }}>
           <Box sx={{ display: 'flex', gap: 1.5, mb: 2 }}>
             <Avatar 
@@ -162,8 +162,8 @@ export default function MainFeed() {
         </CardContent>
       </Card>
 
-      {/* Sort by Divider */}
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, mt: 2 }}>
+      {/* Sort by Divider - Desktop only */}
+      <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', mb: 2, mt: 2 }}>
         <Divider sx={{ flex: 1 }} />
         <Box 
           sx={{ 
@@ -210,14 +210,24 @@ export default function MainFeed() {
         <Card key={post.id} sx={{ mb: 2 }}>
           {/* Reposted/Liked By Header */}
           {(post.repostedBy || post.likedBy) && (
-            <Box sx={{ px: 2, pt: 1.5, pb: 0.5, display: 'flex', alignItems: 'center', gap: 1 }}>
-              {post.repostedAvatar && (
-                <Avatar src={post.repostedAvatar} sx={{ width: 16, height: 16 }} />
-              )}
-              <Typography variant="caption" color="text.secondary">
-                {post.repostedBy && `${post.repostedBy} reposted this`}
-                {post.likedBy && `${post.likedBy} likes this`}
-              </Typography>
+            <Box sx={{ px: 2, pt: 1.5, pb: 0.5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                {post.repostedAvatar && (
+                  <Avatar src={post.repostedAvatar} sx={{ width: 16, height: 16 }} />
+                )}
+                <Typography variant="caption" color="text.secondary">
+                  {post.repostedBy && `${post.repostedBy} reposted this`}
+                  {post.likedBy && `${post.likedBy} likes this`}
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', gap: 0.5 }}>
+                <IconButton size="small">
+                  <MoreVert />
+                </IconButton>
+                <IconButton size="small">
+                  <Close />
+                </IconButton>
+              </Box>
             </Box>
           )}
 
@@ -230,46 +240,47 @@ export default function MainFeed() {
                 {post.author[0]}
               </Avatar>
             }
-            action={
-              <Box>
-                <IconButton size="small">
-                  <MoreVert />
-                </IconButton>
-                <IconButton size="small">
-                  <Close />
-                </IconButton>
-              </Box>
-            }
+            // action={
+            //   <Box sx={{ display: 'flex', gap: 0.5 }}>
+            //     <IconButton size="small">
+            //       <MoreVert />
+            //     </IconButton>
+            //     <IconButton size="small">
+            //       <Close />
+            //     </IconButton>
+            //   </Box>
+            // }
             title={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <Typography variant="subtitle2" fontWeight={600}>
-                  {post.author}
-                </Typography>
-                {post.nestedPost?.verified && (
-                  <Box 
-                    sx={{ 
-                      width: 16, 
-                      height: 16, 
-                      bgcolor: 'primary.main',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Typography sx={{ color: 'white', fontSize: '10px', fontWeight: 700 }}>✓</Typography>
-                  </Box>
-                )}
-                <Typography variant="caption" color="text.secondary">
-                  {post.badge}
-                </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flex: 1 }}>
+                  <Typography variant="subtitle2" fontWeight={600}>
+                    {post.author}
+                  </Typography>
+                  {post.nestedPost?.verified && (
+                    <Box 
+                      sx={{ 
+                        width: 16, 
+                        height: 16, 
+                        bgcolor: 'primary.main',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <Typography sx={{ color: 'white', fontSize: '10px', fontWeight: 700 }}>✓</Typography>
+                    </Box>
+                  )}
+                  <Typography variant="caption" color="text.secondary">
+                    {post.badge}
+                  </Typography>
+                </Box>
                 {!post.isCompany && (
                   <Button 
                     size="small" 
                     variant="text"
                     startIcon={<span style={{ fontSize: '16px', fontWeight: 700 }}>+</span>}
                     sx={{ 
-                      ml: 1,
                       minWidth: 'auto',
                       px: 1,
                       py: 0.25,
@@ -287,15 +298,15 @@ export default function MainFeed() {
                   {post.title || post.followers}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                  <Typography variant="caption" >
+                  <Typography variant="caption" color="text.secondary">
                     {post.time}
                   </Typography>
                   {post.nestedPost?.edited && (
-                    <Typography variant="caption">
+                    <Typography variant="caption" color="text.secondary">
                       • Edited
                     </Typography>
                   )}
-                  <Typography variant="caption" >•</Typography>
+                  <Typography variant="caption" color="text.secondary">•</Typography>
                   <Public fontSize="small" />
                 </Box>
               </Box>
@@ -339,17 +350,17 @@ export default function MainFeed() {
                           sx={{ 
                             width: 16, 
                             height: 16, 
-                           
+                            bgcolor: 'primary.main',
                             borderRadius: '50%',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center'
                           }}
                         >
-                          <Typography sx={{  fontSize: '10px', fontWeight: 700 }}>✓</Typography>
+                          <Typography sx={{ color: 'white', fontSize: '10px', fontWeight: 700 }}>✓</Typography>
                         </Box>
                       )}
-                      <Typography >
+                      <Typography variant="caption" color="text.secondary">
                         {post.nestedPost.badge}
                       </Typography>
                       <Button 
@@ -453,10 +464,15 @@ export default function MainFeed() {
                 fullWidth 
                 startIcon={<ThumbUpOutlined />}
                 sx={{ 
-                  py: 1.5
+                  py: 1.5,
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  gap: { xs: 0.25, sm: 0.5 }
                 }}
               >
-                Like
+                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>Like</Box>
+                <Typography variant="caption" sx={{ display: { xs: 'block', sm: 'none' } }}>
+                  Like
+                </Typography>
               </Button>
               
               {/* Like Options Popup */}
@@ -500,23 +516,44 @@ export default function MainFeed() {
             <Button 
               fullWidth 
               startIcon={<Comment />}
-              sx={{ py: 1.5 }}
+              sx={{ 
+                py: 1.5,
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 0.25, sm: 0.5 }
+              }}
             >
-              Comment
+              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>Comment</Box>
+              <Typography variant="caption" sx={{ display: { xs: 'block', sm: 'none' } }}>
+                Comment
+              </Typography>
             </Button>
             <Button 
               fullWidth 
               startIcon={<Share />}
-              sx={{ py: 1.5 }}
+              sx={{ 
+                py: 1.5,
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 0.25, sm: 0.5 }
+              }}
             >
-              Repost
+              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>Repost</Box>
+              <Typography variant="caption" sx={{ display: { xs: 'block', sm: 'none' } }}>
+                Repost
+              </Typography>
             </Button>
             <Button 
               fullWidth 
               startIcon={<Send />}
-              sx={{ py: 1.5 }}
+              sx={{ 
+                py: 1.5,
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 0.25, sm: 0.5 }
+              }}
             >
-              Send
+              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>Send</Box>
+              <Typography variant="caption" sx={{ display: { xs: 'block', sm: 'none' } }}>
+                Send
+              </Typography>
             </Button>
           </CardActions>
         </Card>

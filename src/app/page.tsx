@@ -45,18 +45,19 @@ export default function HomePage() {
         <Container maxWidth="lg">
           <Toolbar 
             sx={{ 
-              minHeight: { xs: '48px', sm: '52px' },
-              px: { xs: 1, sm: 2, md: 0 },
+              minHeight: { xs: '56px', sm: '52px' },
+              px: { xs: 1.5, sm: 2, md: 0 },
               justifyContent: 'space-between'
             }}
           >
             {/* Left Section - Logo & Search */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1 }, flex: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1 }}>
               {/* Mobile: Profile Avatar */}
               <Avatar
+                src="/young-man-avatar-character-due-avatar-man-vector-icon-cartoon-illustration_1186924-4438.avif"
                 sx={{
-                  width: 32,
-                  height: 32,
+                  width: 40,
+                  height: 40,
                   display: { xs: 'flex', sm: 'none' }
                 }}
               >
@@ -86,25 +87,47 @@ export default function HomePage() {
                   in
                 </Typography>
               </Box>
+              {/* Desktop Search */}
+<Box
+  sx={{
+   display: { xs: 'none', sm: 'flex' },
+    alignItems: 'center',
+    bgcolor: '#EEF3F8',
+    borderRadius: '4px',
+    px: 1.5,
+    height: '34px',
+    width: '280px',
+    cursor: 'text'
+  }}
+>
+  <Search sx={{ fontSize: 20, color: '#666' }} />
+  <InputBase
+    placeholder="Search"
+    sx={{ ml: 1, fontSize: '14px', width: '100%' }}
+  />
+</Box>
 
               {/* Search Bar - Full width on mobile */}
               <Box
                 sx={{
-                  display: 'flex',
+                  // display: 'flex',
+                   display: { xs: 'flex', sm: 'none' },
                   alignItems: 'center',
-                  px: 1.5,
-                  height: '34px',
+                
+                  px: { xs: 1.5, sm: 1.5 },
+                  height: { xs: '40px', sm: '34px' },
                   width: { xs: '100%', sm: '200px', md: '280px' },
                   cursor: 'text',
                   flex: { xs: 1, sm: 0 }
                 }}
               >
-                <Search />
+                <Search sx={{ fontSize: { xs: 22, sm: 20 } }} />
                 <InputBase
                   placeholder="Search"
                   sx={{
                     ml: 1,
-                    flex: 1
+                    flex: 1,
+                    fontSize: { xs: '16px', sm: '14px' }
                   }}
                 />
               </Box>
@@ -113,10 +136,11 @@ export default function HomePage() {
             {/* Mobile: Message Icon (top right) */}
             <IconButton 
               sx={{ 
-                display: { xs: 'flex', sm: 'none' }
+                display: { xs: 'flex', sm: 'none' },
+                p: 1
               }}
             >
-              <Message />
+              <Message sx={{ fontSize: 24 }} />
             </IconButton>
 
             {/* Right Section - Navigation Icons */}
@@ -387,17 +411,27 @@ export default function HomePage() {
           display: { xs: 'block', sm: 'none' }
         }}
       >
-        <Toolbar sx={{ justifyContent: 'space-around', minHeight: '56px' }}>
+        <Toolbar 
+          sx={{ 
+            justifyContent: 'space-around', 
+            minHeight: '60px',
+            px: 0.5
+          }}
+        >
           {/* Home */}
           <ButtonBase
             sx={{
               flexDirection: 'column',
-              gap: 0.5,
-              py: 0.5
+              gap: 0.25,
+              py: 0.75,
+              minWidth: '64px'
             }}
           >
-            <Home />
-            <Typography variant="caption">
+            <Home sx={{ fontSize: 26 }} />
+            <Typography 
+              variant="caption"
+              sx={{ fontSize: '11px', lineHeight: 1.2 }}
+            >
               Home
             </Typography>
           </ButtonBase>
@@ -406,12 +440,16 @@ export default function HomePage() {
           <ButtonBase
             sx={{
               flexDirection: 'column',
-              gap: 0.5,
-              py: 0.5
+              gap: 0.25,
+              py: 0.75,
+              minWidth: '64px'
             }}
           >
-            <People />
-            <Typography variant="caption">
+            <People sx={{ fontSize: 26 }} />
+            <Typography 
+              variant="caption"
+              sx={{ fontSize: '11px', lineHeight: 1.2 }}
+            >
               My Network
             </Typography>
           </ButtonBase>
@@ -420,24 +458,28 @@ export default function HomePage() {
           <ButtonBase
             sx={{
               flexDirection: 'column',
-              gap: 0.5,
-              py: 0.5
+              gap: 0.25,
+              py: 0.75,
+              minWidth: '64px'
             }}
           >
             <Box
               sx={{
-                width: 32,
-                height: 32,
+                width: 26,
+                height: 26,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
               }}
             >
-              <Typography variant="h5" fontWeight={300}>
+              <Typography sx={{ fontSize: '28px', fontWeight: 300, lineHeight: 1 }}>
                 +
               </Typography>
             </Box>
-            <Typography variant="caption">
+            <Typography 
+              variant="caption"
+              sx={{ fontSize: '11px', lineHeight: 1.2 }}
+            >
               Post
             </Typography>
           </ButtonBase>
@@ -446,12 +488,16 @@ export default function HomePage() {
           <ButtonBase
             sx={{
               flexDirection: 'column',
-              gap: 0.5,
-              py: 0.5
+              gap: 0.25,
+              py: 0.75,
+              minWidth: '64px'
             }}
           >
-            <Notifications />
-            <Typography variant="caption">
+            <Notifications sx={{ fontSize: 26 }} />
+            <Typography 
+              variant="caption"
+              sx={{ fontSize: '11px', lineHeight: 1.2 }}
+            >
               Notifications
             </Typography>
           </ButtonBase>
@@ -460,12 +506,16 @@ export default function HomePage() {
           <ButtonBase
             sx={{
               flexDirection: 'column',
-              gap: 0.5,
-              py: 0.5
+              gap: 0.25,
+              py: 0.75,
+              minWidth: '64px'
             }}
           >
-            <Work />
-            <Typography variant="caption">
+            <Work sx={{ fontSize: 26 }} />
+            <Typography 
+              variant="caption"
+              sx={{ fontSize: '11px', lineHeight: 1.2 }}
+            >
               Jobs
             </Typography>
           </ButtonBase>
